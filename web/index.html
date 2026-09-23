@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Prompt Library</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>Prompt Library</h1>
+      <div id="root-status" class="root-status" aria-live="polite"></div>
+      <button id="change-folder-btn" type="button" class="btn btn-secondary">Change folder&hellip;</button>
+      <button id="refresh-btn" type="button" class="btn btn-secondary" title="Re-scan the prompt folder">Refresh</button>
+    </header>
+
+    <div id="folder-panel" class="panel hidden" role="dialog" aria-label="Configure prompt folder">
+      <label for="folder-input">Prompt root folder (absolute path)</label>
+      <div class="folder-row">
+        <input id="folder-input" type="text" placeholder="C:\Users\you\prompts or /home/you/prompts" autocomplete="off" />
+        <button id="folder-save-btn" type="button" class="btn btn-primary">Use this folder</button>
+        <button id="folder-cancel-btn" type="button" class="btn btn-secondary">Cancel</button>
+      </div>
+      <p class="hint">
+        This folder is treated purely as local storage. It may be a plain folder, or independently backed by Git,
+        OneDrive, etc. &mdash; this extension never runs Git commands or manages sync.
+      </p>
+      <div id="folder-error" class="error-text" role="alert"></div>
+    </div>
+
+    <div id="change-banner" class="banner hidden" role="status">
+      <span>Files changed on disk outside this canvas.</span>
+      <button id="banner-refresh-btn" type="button" class="btn btn-small">Refresh</button>
+      <button id="banner-dismiss-btn" type="button" class="btn btn-small btn-secondary">Dismiss</button>
+    </div>
+
+    <main class="layout">
+      <section class="filters" aria-label="Search and filters">
+        <input id="search-input" type="search" placeholder="Search title, tags, description, content&hellip;" aria-label="Search prompts" />
+
+        <fieldset class="status-filters">
+          <legend>Lifecycle</legend>
+          <label><input type="checkbox" value="active" checked /> Active</label>
+          <label><input type="checkbox" value="draft" /> Draft</label>
+          <label><input type="checkbox" value="deprecated" /> Deprecated</label>
+          <label><input type="checkbox" value="archived" /> Archived</label>
+        </fieldset>
+
+        <div class="tag-filter-header">
+          <span>Tags</span>
+          <label class="tag-mode-toggle">
+            <input id="tag-mode-all" type="checkbox" /> Match all selected
+          </label>
+        </div>
+        <div id="tag-chips" class="tag-chips" role="group" aria-label="Filter by tag"></div>
+
+        <button id="new-prompt-btn" type="button" class="btn btn-primary new-prompt-btn">+ New Prompt</button>
+      </section>
+
+      <section class="list-pane" aria-label="Prompt list">
+        <div id="prompt-count" class="prompt-count"></div>
+        <ul id="prompt-list" class="prompt-list"></ul>
+        <div id="broken-files" class="broken-files"></div>
+      </section>
+
+      <section class="detail-pane" aria-label="Prompt detail">
+        <div id="detail-empty" class="detail-empty">Select a prompt to preview it here.</div>
+        <div id="detail-view" class="detail-view hidden"></div>
+        <div id="edit-view" class="edit-view hidden"></div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

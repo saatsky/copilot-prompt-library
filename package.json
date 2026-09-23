@@ -1,0 +1,13 @@
+{
+  "name": "prompt-library",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local-first Prompt Library canvas extension for GitHub Copilot App.",
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\""
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
