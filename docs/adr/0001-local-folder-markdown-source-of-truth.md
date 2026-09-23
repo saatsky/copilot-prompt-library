@@ -1,7 +1,7 @@
 ---
 title: Use a local folder of Markdown files as the prompt source of truth
-status: accepted
 date: 2026-09-23
+status: Proposed
 ---
 
 # 0001. Use a local folder of Markdown files as the prompt source of truth
@@ -32,7 +32,7 @@ dependency/VCS, and symlinked entries. External changes are surfaced through
 refresh/metadata checks and saves use optimistic conflict detection rather than
 silently overwriting a newer file.
 
-## Considered options
+## Options
 
 ### Store prompts in extension or session state
 
@@ -81,4 +81,3 @@ Negative:
 
 - [0002. Use metadata-driven discovery in a flat collection](0002-metadata-driven-discovery.md)
 - [0004. Use a user-scoped canvas and explicit clipboard handoff](0004-user-scoped-canvas-and-clipboard-handoff.md)
-

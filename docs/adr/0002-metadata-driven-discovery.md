@@ -1,7 +1,7 @@
 ---
 title: Use metadata-driven discovery in a flat prompt collection
-status: accepted
 date: 2026-09-23
+status: Proposed
 ---
 
 # 0002. Use metadata-driven discovery in a flat prompt collection
@@ -35,7 +35,7 @@ request other statuses explicitly. Store a SemVer `version` and allow
 Keep the relative path for addressing the file, not for classifying its
 meaning.
 
-## Considered options
+## Options
 
 ### Make directory taxonomy the primary organization
 
@@ -88,4 +88,3 @@ Negative:
 
 - [0001. Use a local folder of Markdown files as the prompt source of truth](0001-local-folder-markdown-source-of-truth.md)
 - [0003. Use an interoperable Markdown metadata superset](0003-interoperable-markdown-metadata.md)
-

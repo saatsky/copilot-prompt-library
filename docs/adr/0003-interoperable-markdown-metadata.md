@@ -1,7 +1,7 @@
 ---
 title: Use an interoperable Markdown metadata superset
-status: accepted
 date: 2026-09-23
+status: Proposed
 ---
 
 # 0003. Use an interoperable Markdown metadata superset
@@ -38,7 +38,7 @@ Keep the internal prompt shape and stable name compatible with a future
 optional adapter for MCP `prompts/list` and `prompts/get`, without claiming
 that an MCP server exists in this solution.
 
-## Considered options
+## Options
 
 ### Define a proprietary prompt format
 
@@ -89,4 +89,3 @@ Negative:
 ## Related decisions
 
 - [0002. Use metadata-driven discovery in a flat prompt collection](0002-metadata-driven-discovery.md)
-

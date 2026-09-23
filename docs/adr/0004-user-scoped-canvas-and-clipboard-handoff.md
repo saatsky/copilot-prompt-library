@@ -1,7 +1,7 @@
 ---
 title: Use a user-scoped canvas and explicit clipboard handoff
-status: accepted
 date: 2026-09-23
+status: Proposed
 ---
 
 # 0004. Use a user-scoped canvas and explicit clipboard handoff
@@ -33,7 +33,7 @@ composer. Do not attempt direct composer insertion, automatic submission,
 skill loading, or agent switching. Surface clipboard permission failures
 explicitly.
 
-## Considered options
+## Options
 
 ### Install per repository or session
 
@@ -91,4 +91,3 @@ Negative:
 
 - [0001. Use a local folder of Markdown files as the prompt source of truth](0001-local-folder-markdown-source-of-truth.md)
 - [0003. Use an interoperable Markdown metadata superset](0003-interoperable-markdown-metadata.md)
-
