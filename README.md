@@ -233,6 +233,10 @@ third-party dependencies.
 
 ## Known limitations
 
+- The canvas follows the embedded browser's `prefers-color-scheme` setting,
+  including live changes when the host updates it. The current canvas SDK
+  doesn't expose a separate theme API, so the canvas can't follow an app theme
+  that the host doesn't propagate to the browser.
 - No native folder picker — the root folder is entered as a text path. Canvas
   hosts don't currently expose a safe file/folder picker API to extensions.
 - Clipboard copy relies on `navigator.clipboard`, which requires the canvas

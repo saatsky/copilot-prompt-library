@@ -1,5 +1,5 @@
 :root {
-    color-scheme: light dark;
+    color-scheme: light;
     --color-canvas-default: #ffffff;
     --color-canvas-subtle: #f6f8fa;
     --color-border-default: #d0d7de;
@@ -7,6 +7,7 @@
     --color-fg-muted: #59636e;
     --color-accent-fg: #0969da;
     --color-accent-emphasis: #0969da;
+    --color-accent-contrast: #ffffff;
     --color-success-fg: #1a7f37;
     --color-attention-fg: #9a6700;
     --color-attention-subtle: #fff8c5;
@@ -21,6 +22,7 @@
 
 @media (prefers-color-scheme: dark) {
     :root {
+        color-scheme: dark;
         --color-canvas-default: #0d1117;
         --color-canvas-subtle: #161b22;
         --color-border-default: #30363d;
@@ -28,6 +30,7 @@
         --color-fg-muted: #8b949e;
         --color-accent-fg: #4493f8;
         --color-accent-emphasis: #4493f8;
+        --color-accent-contrast: #0d1117;
         --color-success-fg: #3fb950;
         --color-attention-fg: #d29922;
         --color-attention-subtle: #3a2f0a;
@@ -96,7 +99,9 @@ button {
 .btn:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
-a:focus-visible {
+select:focus-visible,
+a:focus-visible,
+.prompt-list-item:focus-visible {
     outline: 2px solid var(--color-accent-fg);
     outline-offset: 1px;
 }
@@ -261,7 +266,7 @@ a:focus-visible {
 
 .tag-chip.selected {
     background: var(--color-accent-emphasis);
-    color: #fff;
+    color: var(--color-accent-contrast);
     border-color: var(--color-accent-emphasis);
 }
 
