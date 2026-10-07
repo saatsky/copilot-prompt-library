@@ -10,6 +10,14 @@
     <header class="topbar">
       <h1>Prompt Library</h1>
       <div id="root-status" class="root-status" aria-live="polite"></div>
+      <label class="theme-control" for="theme-select">
+        Theme
+        <select id="theme-select" aria-label="Color theme">
+          <option value="auto">Auto</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </label>
       <button id="change-folder-btn" type="button" class="btn btn-secondary">Change folder&hellip;</button>
       <button id="refresh-btn" type="button" class="btn btn-secondary" title="Re-scan the prompt folder">Refresh</button>
     </header>

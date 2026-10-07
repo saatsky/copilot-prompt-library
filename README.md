@@ -94,7 +94,7 @@ optional pre-release/build metadata). Suggested convention for prompts:
 - You choose an absolute folder path on first use (or via **Change
   folder…**). It's persisted to `~/.copilot/prompt-library/config.json` (a
   small local JSON preference file, independent of any single repository or
-  session).
+  session). The selected theme is persisted there too.
 - Every file read/write is checked to resolve **strictly inside** that
   folder (no `..` traversal, no absolute-path escapes, symlinks are not
   followed) before touching disk.
@@ -179,12 +179,16 @@ Copilot CLI) and run `extensions_reload`.
    repo for sample content to copy in and try search/tags/lifecycle with.
 3. Search, filter by tag (match **any** by default, or toggle **match all**),
    and filter by lifecycle status (only `active` is shown by default).
-4. Select a prompt to preview it, then **Copy prompt body** to copy the
+4. Choose **Auto**, **Light**, or **Dark** from the **Theme** selector. Auto
+   follows the operating system/browser color preference; Light and Dark
+   override it. The canvas host currently does not expose Copilot's explicit
+   theme selection to extensions.
+5. Select a prompt to preview it, then **Copy prompt body** to copy the
    Markdown body to your clipboard so you can paste it into the Copilot
    composer yourself. The current canvas SDK does not expose a safe way to
    prefill the composer directly, so this is a deliberate one-click-copy,
    not an auto-submit.
-5. Use **+ New Prompt** or **Edit** to create/update prompt files directly
+6. Use **+ New Prompt** or **Edit** to create/update prompt files directly
    from the canvas; validation errors and save conflicts are shown inline.
 
 ### Agent-callable actions

@@ -3,6 +3,7 @@
 
 const state = {
     rootPath: null,
+    theme: "auto",
     selectedTags: new Set(),
     tagModeAll: false,
     statuses: new Set(["active"]),
@@ -14,6 +15,7 @@ const state = {
     editing: null, // { mode: "new" | "edit", relPath?, expectedMtimeMs? }
 };
 
+const THEME_MODES = new Set(["auto", "light", "dark"]);
 const el = (id) => document.getElementById(id);
 
 async function api(path, options) {
@@ -35,8 +37,39 @@ async function api(path, options) {
 async function refreshRootState() {
     const data = await api("/api/state");
     state.rootPath = data.rootPath;
+    applyTheme(THEME_MODES.has(data.theme) ? data.theme : localStorage.getItem("prompt-library-theme"));
     renderRootStatus(data.error);
     if (state.rootPath) await loadPrompts();
+}
+
+function applyTheme(theme) {
+    const selectedTheme = THEME_MODES.has(theme) ? theme : "auto";
+    state.theme = selectedTheme;
+    document.documentElement.dataset.theme = selectedTheme;
+    el("theme-select").value = selectedTheme;
+    localStorage.setItem("prompt-library-theme", selectedTheme);
+}
+
+async function saveTheme() {
+    const themeSelect = el("theme-select");
+    const previousTheme = state.theme;
+    applyTheme(themeSelect.value);
+    try {
+        const data = await api("/api/theme", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ theme: themeSelect.value }),
+        });
+        applyTheme(data.theme);
+        flashStatus(`Theme set to ${data.theme}.`);
+    } catch (err) {
+        if (err.status === 404) {
+            flashStatus("Theme applied for this canvas. Reload the extension to save it across canvas opens.");
+            return;
+        }
+        applyTheme(previousTheme);
+        flashStatus(`Could not save theme: ${err.message}`, true);
+    }
 }
 
 function renderRootStatus(error) {
@@ -446,6 +479,7 @@ async function pollForChanges() {
 // ---------- Wiring ----------
 
 function wireEvents() {
+    el("theme-select").addEventListener("change", saveTheme);
     el("change-folder-btn").addEventListener("click", () => toggleFolderPanel(true));
     el("folder-cancel-btn").addEventListener("click", () => toggleFolderPanel(false));
     el("folder-save-btn").addEventListener("click", saveFolder);

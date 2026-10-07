@@ -6,7 +6,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { readConfig, writeConfig, validateRoot } from "./config-store.mjs";
+import { readConfig, writeConfig, validateRoot, isThemeMode } from "./config-store.mjs";
 import {
     scanPromptFiles,
     readPrompt,
@@ -39,13 +39,15 @@ const MIME_TYPES = {
 export function createState() {
     return {
         rootPath: /** @type {string | null} */ (null),
+        theme: "auto",
         prompts: /** @type {Map<string, object>} */ (new Map()),
         lastScanError: /** @type {string | null} */ (null),
     };
 }
 
 async function loadRootFromConfig(state) {
-    const { rootPath } = await readConfig();
+    const { rootPath, theme } = await readConfig();
+    state.theme = theme;
     if (!rootPath) return;
     const check = await validateRoot(rootPath);
     if (check.ok) {
@@ -189,6 +191,7 @@ export async function handleRequest(state, req, res) {
             }
             sendJson(res, 200, {
                 rootPath: state.rootPath,
+                theme: state.theme,
                 error: state.lastScanError,
                 promptCount: state.prompts.size,
             });
@@ -203,13 +206,29 @@ export async function handleRequest(state, req, res) {
                 return;
             }
             state.rootPath = check.resolvedPath;
-            await writeConfig({ rootPath: check.resolvedPath });
+            const config = await readConfig();
+            state.theme = config.theme;
+            await writeConfig({ ...config, rootPath: check.resolvedPath });
             await rescan(state);
             sendJson(res, 200, {
                 rootPath: state.rootPath,
+                theme: state.theme,
                 error: state.lastScanError,
                 promptCount: state.prompts.size,
             });
+            return;
+        }
+
+        if (pathname === "/api/theme" && req.method === "POST") {
+            const body = await readJsonBody(req);
+            if (!isThemeMode(body.theme)) {
+                sendJson(res, 400, { error: "Theme must be 'auto', 'light', or 'dark'." });
+                return;
+            }
+            const config = await readConfig();
+            await writeConfig({ ...config, theme: body.theme });
+            state.theme = body.theme;
+            sendJson(res, 200, { theme: state.theme });
             return;
         }
 

@@ -11,23 +11,31 @@ import path from "node:path";
 
 const CONFIG_DIR = path.join(os.homedir(), ".copilot", "prompt-library");
 const CONFIG_FILE = path.join(CONFIG_DIR, "config.json");
+const THEME_MODES = new Set(["auto", "light", "dark"]);
+
+export function isThemeMode(value) {
+    return THEME_MODES.has(value);
+}
 
 /**
- * @returns {Promise<{ rootPath: string | null }>}
+ * @returns {Promise<{ rootPath: string | null, theme: "auto" | "light" | "dark" }>}
  */
 export async function readConfig() {
     try {
         const raw = await fs.readFile(CONFIG_FILE, "utf8");
         const parsed = JSON.parse(raw);
-        return { rootPath: typeof parsed.rootPath === "string" ? parsed.rootPath : null };
+        return {
+            rootPath: typeof parsed.rootPath === "string" ? parsed.rootPath : null,
+            theme: isThemeMode(parsed.theme) ? parsed.theme : "auto",
+        };
     } catch (err) {
-        if (err.code === "ENOENT") return { rootPath: null };
+        if (err.code === "ENOENT") return { rootPath: null, theme: "auto" };
         throw err;
     }
 }
 
 /**
- * @param {{ rootPath: string | null }} config
+ * @param {{ rootPath: string | null, theme: "auto" | "light" | "dark" }} config
  */
 export async function writeConfig(config) {
     await fs.mkdir(CONFIG_DIR, { recursive: true });
